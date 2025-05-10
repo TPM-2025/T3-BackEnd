@@ -1,0 +1,40 @@
+### GET ALL
+GET http://localhost:5000/api/clothes
+
+### GET BY ID
+GET http://localhost:5000/api/clothes/2
+
+### POST
+POST http://localhost:5000/api/clothes
+Content-Type: application/json
+
+{
+  "name": "Cotton T-Shirt",
+  "price": 24.99,
+  "category": "T-Shirt",
+  "brand": "Uniqlo",
+  "sold": 1200,
+  "rating": 5,
+  "stock": 150,
+  "yearReleased": 2024,
+  "material": "100% Cotton"
+}
+
+### EDIT USER
+PUT http://localhost:5000/api/clothes/16
+Content-Type: application/json
+
+{
+  "name": "Cotton T-Shirt",
+  "price": 24.99,
+  "category": "T-Shirt",
+  "brand": "Uniqlo",
+  "sold": 1200,
+  "rating": 5,
+  "stock": 150,
+  "yearReleased": 2024,
+  "material": "100% Cotton"
+}
+
+### DELETE USER
+DELETE http://localhost:5000/api/clothes/19
