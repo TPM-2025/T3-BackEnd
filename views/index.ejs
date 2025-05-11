@@ -6,102 +6,220 @@
     <title>Document</title>
   </head>
   <body>
-    <h3>API TCC Pertemuan 5</h3>
+    <h3>API Tugas TPM</h3>
+    <div>
+      Base URL:
+      <a href="https://tpm-api-tugas-872136705893.us-central1.run.app/"
+        >https://tpm-api-tugas-872136705893.us-central1.run.app/</a
+      >
+    </div>
+    <br />
     <div>Daftar Endpoint API:</div>
     <table border="1">
       <thead>
-        <tr>
+        <tr style="font-weight: bold">
           <td>Metode</td>
           <td>Endpoint</td>
           <td>Deskripsi</td>
           <td>Request Body</td>
-          <td>Contoh Response</td>
+          <td>Contoh Response Sukses</td>
+          <td>Contoh Response Error</td>
         </tr>
       </thead>
       <tbody style="font-family: monospace">
         <tr>
           <td>GET</td>
-          <td>/users</td>
-          <td>Mengambil seluruh data dari tabel users.</td>
+          <td>/api/clothes</td>
+          <td>Mengambil seluruh data pakaian.</td>
           <td>-</td>
           <td>
+            <span style="font-weight: bold; color: green">
+              Sukses <br />
+              (Status Code 200) <br />
+            </span>
+            <hr />
             { <br />
             &nbsp; "status": "Success", <br />
-            &nbsp; "message": "Users Retrieved", <br />
+            &nbsp; "message": "Clothes Retrieved", <br />
             &nbsp; "data": [ <br />
-            &nbsp;&nbsp; { <br />
-            &nbsp;&nbsp;&nbsp; "id": 1, <br />
-            &nbsp;&nbsp;&nbsp; "name": "rafli", <br />
-            &nbsp;&nbsp;&nbsp; "email": "rafli@gmail.com", <br />
-            &nbsp;&nbsp;&nbsp; "gender": "Male", <br />
-            &nbsp;&nbsp;&nbsp; "createdAt": "2025-04-29T13:17:17.000Z", <br />
-            &nbsp;&nbsp;&nbsp; "updatedAt": "2025-04-29T13:17:17.000Z" <br />
-            &nbsp;&nbsp; }, <br />
-            &nbsp;&nbsp; ... <br />
+            &nbsp; &nbsp; { <br />
+            &nbsp; &nbsp; &nbsp; "id": 1, <br />
+            &nbsp; &nbsp; &nbsp; "name": "Classic White T-Shirt", <br />
+            &nbsp; &nbsp; &nbsp; "price": 15000, <br />
+            &nbsp; &nbsp; &nbsp; "category": "T-Shirt", <br />
+            &nbsp; &nbsp; &nbsp; "rating": 4.7, <br />
+            &nbsp; &nbsp; }, <br />
+            &nbsp; &nbsp; ... <br />
             &nbsp; ] <br />
             }
           </td>
+          <td>-</td>
         </tr>
         <tr>
           <td>GET</td>
-          <td>/users/:id</td>
-          <td>Mengambil data dari tabel users berdasarkan id.</td>
+          <td>/api/clothes/:id</td>
+          <td>Mengambil data sebuah pakaian berdasarkan id.</td>
           <td>-</td>
           <td>
+            <span style="font-weight: bold; color: green">
+              Sukses <br />
+              (Status Code 200) <br />
+            </span>
+            <hr />
             { <br />
             &nbsp; "status": "Success", <br />
             &nbsp; "message": "Users Retrieved", <br />
             &nbsp; "data": { <br />
-            &nbsp;&nbsp; "id": 1, <br />
-            &nbsp;&nbsp; "name": "rafli", <br />
-            &nbsp;&nbsp; "email": "rafli@gmail.com", <br />
-            &nbsp;&nbsp; "gender": "Male", <br />
-            &nbsp;&nbsp; "createdAt": "2025-04-29T13:17:17.000Z", <br />
-            &nbsp;&nbsp; "updatedAt": "2025-04-29T13:17:17.000Z" <br />
+            &nbsp; &nbsp; "id": 1, <br />
+            &nbsp; &nbsp; "name": "Denim Jacket", <br />
+            &nbsp; &nbsp; "price": 25000, <br />
+            &nbsp; &nbsp; "category": "Jacket", <br />
+            &nbsp; &nbsp; "brand": "Levi's", <br />
+            &nbsp; &nbsp; "sold": 850, <br />
+            &nbsp; &nbsp; "rating": 4.8, <br />
+            &nbsp; &nbsp; "stock": 75, <br />
+            &nbsp; &nbsp; "yearReleased": 2019, <br />
+            &nbsp; &nbsp; "material": "Denim" <br />
             &nbsp; } <br />
             }
+          </td>
+          <td style="vertical-align: top">
+            <span style="font-weight: bold; color: red">
+              ID tidak valid (Pakaian tidak ditemukan) <br />
+              (Status Code 404) <br />
+            </span>
+            <hr />
+            { <br />
+            &nbsp; "status": "Error", <br />
+            &nbsp; "message": "Clothing not found 😮" <br />
+            } <br />
           </td>
         </tr>
         <tr>
           <td>POST</td>
-          <td>/users</td>
-          <td>Menambahkan data baru ke tabel users.</td>
+          <td>/api/clothes</td>
+          <td>Menambahkan data pakaian baru ke database.</td>
           <td rowspan="2">
-            Content-type: application/json<br />
+            Content-type: application/json<br /><br />
             Contoh isi request body: <br />
             { <br />
-            &nbsp; "name": "awgnc" <br />
-            &nbsp; "email": "awg@awg.inc" <br />
-            &nbsp; "gender": "Male" <br />
-            }
+            &nbsp; "name": "Denim Jacket", <br />
+            &nbsp; "price": 25000, <br />
+            &nbsp; "category": "Jacket", <br />
+            &nbsp; "brand": "Levi's", <br />
+            &nbsp; "sold": 850, <br />
+            &nbsp; "rating": 4.8, <br />
+            &nbsp; "stock": 75, <br />
+            &nbsp; "yearReleased": 2019, <br />
+            &nbsp; "material": "Denim" <br />
+            } <br /><br />
+            Keterangan: <br />
+            - name, category, brand, material memiliki tipe data VARCHAR
+            (String) <br />
+            - price, sold, stock, dan yearReleased memiliki tipe data INT <br />
+            - rating memiliki tipe data FLOAT <br />
+            - rating tidak boleh kurang dari 0 atau lebih dari 10 <br />
+            - yearReleased tidak boleh kurang dari 2018 atau lebih dari tahun
+            sekarang (2025)
           </td>
-          <td>
+          <td style="vertical-align: top">
+            <span style="font-weight: bold; color: green">
+              Sukses <br />
+              (Status Code 201) <br />
+            </span>
+            <hr />
             { <br />
             &nbsp; "status": "Success", <br />
-            &nbsp; "message": "Users Created" <br />
+            &nbsp; "message": "New Clothing Added" <br />
+            }
+          </td>
+          <td rowspan="2">
+            <span style="font-weight: bold; color: red">
+              Request body tidak lengkap <br />
+              (Status Code 400) <br />
+            </span>
+            <hr />
+            { <br />
+            &nbsp; "status": "Error", <br />
+            &nbsp; "message": "Field cannot be empty 😠" <br />
+            } <br /><br />
+            <hr />
+            <span style="font-weight: bold; color: red">
+              Rating kurang dari 0 atau lebih dari 5 <br />
+              (Status Code 400) <br />
+            </span>
+            <hr />
+            { <br />
+            &nbsp; "status": "Error", <br />
+            &nbsp; "message": "Rating must be between 0 and 5" <br />
+            } <br /><br />
+            <hr />
+            <span style="font-weight: bold; color: red">
+              Tahun rilis sebelum 2018 atau setelah tahun 2025 <br />
+              (Status Code 400)
+              <br />
+            </span>
+            <hr />
+            { <br />
+            &nbsp; "status": "Error", <br />
+            &nbsp; "message": "Release year must be between 2018 and 2025"
+            <br />
+            } <br /><br />
+            <hr />
+            <span style="font-weight: bold; color: red">
+              ID tidak valid (Pakaian tidak ditemukan) <br />
+              (Status Code 404)
+              <br />
+            </span>
+            <hr />
+            { <br />
+            &nbsp; "status": "Error", <br />
+            &nbsp; "message": "Clothing not found 😮"
+            <br />
             }
           </td>
         </tr>
         <tr>
           <td>PUT</td>
-          <td>/users/:id</td>
+          <td>/api/clothes/:id</td>
           <td>Mengubah data dari tabel users berdasarkan id.</td>
-          <td>
+          <td style="vertical-align: top">
+            <span style="font-weight: bold; color: green">
+              Sukses <br />
+              (Status Code 200) <br />
+            </span>
+            <hr />
             { <br />
             &nbsp; "status": "Success", <br />
-            &nbsp; "message": "Users Updated" <br />
-            }
+            &nbsp; "message": "Clothing Updated" <br />
+            } <br />
           </td>
         </tr>
         <tr>
           <td>DELETE</td>
-          <td>/users/:id</td>
+          <td>/api/clothes/:id</td>
           <td>Menghapus data dari tabel users berdasarkan id.</td>
           <td>-</td>
           <td>
+            <span style="font-weight: bold; color: green">
+              Sukses <br />
+              (Status Code 200) <br />
+            </span>
+            <hr />
             { <br />
             &nbsp; "status": "Success", <br />
-            &nbsp; "message": "Users Deleted" <br />
+            &nbsp; "message": "Clothing Removed" <br />
+            }
+          </td>
+          <td>
+            <span style="font-weight: bold; color: red">
+              ID tidak valid (Pakaian tidak ditemukan) <br />
+              (Status Code 404) <br />
+            </span>
+            <hr />
+            { <br />
+            &nbsp; "status": "Error", <br />
+            &nbsp; "message": "Clothing not found 😮" <br />
             }
           </td>
         </tr>

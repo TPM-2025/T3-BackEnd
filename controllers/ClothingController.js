@@ -5,15 +5,15 @@ import { ErrorWithStatusCode } from "../utils.js";
 async function getClothes(req, res) {
   try {
     const clothes = await Clothing.findAll({
-      attributes: ["name", "price", "category", "brand"],
+      attributes: ["id", "name", "price", "category", "rating"],
     });
-    res.status(200).json({
+    return res.status(200).json({
       status: "Success",
       message: "Clothes Retrieved",
       data: clothes,
     });
   } catch (error) {
-    res.status(error.statusCode || 500).json({
+    return res.status(error.statusCode || 500).json({
       status: "Error",
       message: error.message,
     });
@@ -27,20 +27,15 @@ async function getClothingById(req, res) {
       attributes: { exclude: ["createdAt", "updatedAt"] },
       where: { id: req.params.id },
     });
+    if (!clothing) throw new ErrorWithStatusCode("Clothing not found 😮", 404);
 
-    if (!clothing) {
-      const error = new Error("Clothing not found 😮");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    res.status(200).json({
+    return res.status(200).json({
       status: "Success",
       message: "Clothing Retrieved",
       data: clothing,
     });
   } catch (error) {
-    res.status(error.statusCode || 500).json({
+    return res.status(error.statusCode || 500).json({
       status: "Error",
       message: error.message,
     });
@@ -55,7 +50,7 @@ async function createClothing(req, res) {
     if (Object.keys(req.body).length < 9) {
       throw new ErrorWithStatusCode("Field cannot be empty 😠", 400);
     } else if (rating < 0 || rating > 5) {
-      throw new ErrorWithStatusCode("Rating must be between 1 and 5", 400);
+      throw new ErrorWithStatusCode("Rating must be between 0 and 5", 400);
     } else if (yearReleased < 2018 || yearReleased > 2025) {
       const currentYear = new Date().getFullYear();
       throw new ErrorWithStatusCode(
@@ -108,7 +103,7 @@ async function updateClothing(req, res) {
       message: "Clohting Updated",
     });
   } catch (error) {
-    res.status(error.statusCode || 500).json({
+    return res.status(error.statusCode || 500).json({
       status: "Error",
       message: error.message,
     });
@@ -120,15 +115,15 @@ async function deleteClothing(req, res) {
     const ifExist = await Clothing.findOne({
       where: { id: req.params.id },
     });
-    if (!ifExist) throw new ErrorWithStatusCode("Clothing not found 😮", 400);
+    if (!ifExist) throw new ErrorWithStatusCode("Clothing not found 😮", 404);
 
     await Clothing.destroy({ where: { id: req.params.id } });
-    res.status(200).json({
+    return res.status(200).json({
       status: "Success",
       message: "Clothing Removed",
     });
   } catch (error) {
-    res.status(error.statusCode || 500).json({
+    return res.status(error.statusCode || 500).json({
       status: "Error",
       message: error.message,
     });
